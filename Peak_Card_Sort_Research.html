@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak App — Card Sorting Research</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0D3D5C;
+  --teal: #0A6E8A;
+  --teal-light: #E8F4F7;
+  --teal-mid: #B8DDE8;
+  --gold: #C8A84B;
+  --gold-light: #FDF6E3;
+  --white: #FAFAF8;
+  --off-white: #F4F1EC;
+  --gray-100: #EEEBE6;
+  --gray-200: #D8D4CE;
+  --gray-400: #9E9A94;
+  --gray-600: #6B6762;
+  --gray-800: #2C2A28;
+  --error: #B5372A;
+  --success: #2A7A4F;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+body {
+  background: var(--off-white);
+  font-family: var(--font-body);
+  color: var(--gray-800);
+  line-height: 1.6;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  padding: 80px 40px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(10,110,138,0.15), transparent);
+}
+
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal-mid);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  color: var(--white);
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  text-align: center;
+}
+
+.meta-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal-mid);
+  margin-bottom: 4px;
+}
+
+.meta-value {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── SECTION ── */
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section-tag {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--navy);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--gray-600);
+  max-width: 700px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+/* ── METHOD OVERVIEW ── */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.method-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px 24px;
+  border: 1px solid var(--gray-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.method-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+
+.method-card.open::before { background: var(--teal); }
+.method-card.closed::before { background: var(--gold); }
+.method-card.hybrid::before { background: var(--navy); }
+
+.method-number {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--gray-200);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.method-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.method-card p {
+  font-size: 14px;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.method-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.method-card.open .method-tag { background: var(--teal-light); color: var(--teal); }
+.method-card.closed .method-tag { background: var(--gold-light); color: var(--gold); }
+.method-card.hybrid .method-tag { background: #EEF0F5; color: var(--navy); }
+
+/* ── CARD SORT DISPLAY ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.sort-card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--gray-800);
+  line-height: 1.3;
+  transition: all 0.15s;
+  cursor: default;
+  position: relative;
+}
+
+.sort-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 2px 12px rgba(10,110,138,0.1);
+}
+
+.card-num {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 10px;
+  color: var(--gray-400);
+  font-family: monospace;
+}
+
+/* ── CATEGORY RESULTS ── */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.result-category {
+  background: var(--white);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+
+.category-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.category-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--navy);
+  flex: 1;
+}
+
+.category-count {
+  font-size: 12px;
+  color: var(--gray-400);
+  font-family: monospace;
+}
+
+.category-cards {
+  padding: 0 18px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.category-chip {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--off-white);
+  color: var(--gray-600);
+  border: 1px solid var(--gray-200);
+}
+
+/* ── AGREEMENT MATRIX ── */
+.matrix-wrap {
+  overflow-x: auto;
+  margin-bottom: 32px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-800);
+}
+
+tr:nth-child(even) td { background: var(--off-white); }
+
+.agreement-high { color: var(--success); font-weight: 600; }
+.agreement-mid { color: var(--gold); font-weight: 600; }
+.agreement-low { color: var(--error); font-weight: 600; }
+
+/* ── NAVIGATION PROPOSAL ── */
+.nav-proposal {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-tab {
+  flex: 1;
+  min-width: 180px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--gray-200);
+}
+
+.nav-tab-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.nav-icon {
+  font-size: 20px;
+}
+
+.nav-tab-name {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--navy);
+}
+
+.nav-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-items li {
+  font-size: 13px;
+  color: var(--gray-600);
+  padding-left: 12px;
+  position: relative;
+}
+
+.nav-items li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+
+/* ── CALLOUT BOX ── */
+.callout {
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  border-left: 4px solid;
+}
+
+.callout.finding {
+  background: var(--teal-light);
+  border-color: var(--teal);
+}
+
+.callout.insight {
+  background: var(--gold-light);
+  border-color: var(--gold);
+}
+
+.callout.recommendation {
+  background: #EDF7EF;
+  border-color: var(--success);
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.callout.finding .callout-label { color: var(--teal); }
+.callout.insight .callout-label { color: var(--gold); }
+.callout.recommendation .callout-label { color: var(--success); }
+
+.callout p {
+  font-size: 14px;
+  color: var(--gray-800);
+  line-height: 1.6;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  flex: 1;
+  min-width: 140px;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--gray-200);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── ASSIGNMENT BOX ── */
+.assignment {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 40px;
+  color: var(--white);
+  margin-bottom: 40px;
+}
+
+.assignment h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.assignment .subtitle {
+  font-size: 14px;
+  color: var(--teal-mid);
+  margin-bottom: 24px;
+}
+
+.assignment-steps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.step {
+  background: rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.step-num {
+  font-size: 11px;
+  color: var(--teal-mid);
+  font-family: monospace;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.step h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.step p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--navy);
+  padding: 40px;
+  text-align: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.footer a { color: var(--teal-mid); text-decoration: none; }
+
+/* ── TWO COL ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* ── PHASE BADGE ── */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-light);
+  color: var(--teal);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.phase-badge.gold { background: var(--gold-light); color: #8A6A10; }
+.phase-badge.navy { background: #EEF0F5; color: var(--navy); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .method-grid, .results-grid, .two-col, .assignment-steps { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 32px; }
+  .hero-meta { gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">UX Research Portfolio — Card Sorting</div>
+  <h1>Peak App</h1>
+  <p class="hero-sub">How card sorting shaped Peak's information architecture and resource navigation system</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-label">Researcher</div>
+      <div class="meta-value">Beth Keller Kirycki</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Methods</div>
+      <div class="meta-value">Open / Closed / Hybrid Card Sort</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Participants</div>
+      <div class="meta-value">24 college students</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Product</div>
+      <div class="meta-value">Peak — Academic Wellness App</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Context</div>
+      <div class="meta-value">Portfolio / Teaching Artifact</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- SECTION: OVERVIEW -->
+<div class="section">
+  <div class="section-tag">Background</div>
+  <h2 class="section-title">Why Card Sorting?</h2>
+  <p class="section-desc">Peak's resources section needed to surface 24+ campus support services in a way that matched how students actually think about their needs — not how institutions organize their departments. Card sorting is the foundational method for this kind of information architecture work.</p>
+
+  <div class="method-grid">
+    <div class="method-card open">
+      <div class="method-number">01</div>
+      <h3>Open Card Sort</h3>
+      <p>Participants organize cards into groups they create and name themselves. No predefined categories. Reveals users' mental models and natural language for content groupings.</p>
+      <span class="method-tag">Mental model discovery</span>
+    </div>
+    <div class="method-card closed">
+      <div class="method-number">02</div>
+      <h3>Closed Card Sort</h3>
+      <p>Participants sort cards into predefined categories. Tests whether a proposed structure makes sense to users. Validates or challenges existing IA decisions.</p>
+      <span class="method-tag">Structure validation</span>
+    </div>
+    <div class="method-card hybrid">
+      <div class="method-number">03</div>
+      <h3>Hybrid Card Sort</h3>
+      <p>Combines both: predefined categories exist, but participants can create new ones if needed. Balances structure testing with flexibility for edge cases and surprises.</p>
+      <span class="method-tag">Refinement & synthesis</span>
+    </div>
+  </div>
+
+  <div class="callout finding">
+    <div class="callout-label">Research Question</div>
+    <p>How do college students mentally categorize campus support services — and does that mental model match Peak's proposed four-tab navigation structure (Check-in / Courses / Resources / Community)?</p>
+  </div>
+</div>
+
+<!-- SECTION: STUDY DESIGN -->
+<div class="section">
+  <div class="section-tag">Study Design</div>
+  <h2 class="section-title">Research Setup</h2>
+  <p class="section-desc">Three sequential studies, each building on the previous. Conducted remotely using Maze and OptimalSort, with follow-up interviews after each round.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-number">24</div>
+      <div class="stat-label">Total Participants</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">30</div>
+      <div class="stat-label">Cards Sorted</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Study Rounds</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Follow-up Interviews</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Final Nav Categories</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 12px;">Participant Profile</h3>
+      <table>
+        <tr><th>Characteristic</th><th>Distribution</th></tr>
+        <tr><td>First-year students</td><td>6 (25%)</td></tr>
+        <tr><td>Sophomore / Junior</td><td>12 (50%)</td></tr>
+        <tr><td>Senior / Grad student</td><td>6 (25%)</td></tr>
+        <tr><td>Had used campus wellness services</td><td>14 (58%)</td></tr>
+        <tr><td>Had never used campus wellness services</td><td>10 (42%)</td></tr>
+        <tr><td>Remote / commuter students</td><td>9 (38%)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 12px;">The 30 Cards</h3>
+      <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 12px;">Each card represented one campus support item. Cards were written in plain language — not institutional names.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Talk to a counselor</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Track my grades</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Find a study group</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Get emergency food</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Apply for financial aid</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Schedule a tutoring session</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Crisis line</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Set a deadline reminder</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Talk to my advisor</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Find housing help</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">See a doctor</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">Check my mood history</span>
+        <span style="font-size: 11px; background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 3px 8px; color: var(--gray-600);">+ 18 more</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: OPEN CARD SORT -->
+<div class="section">
+  <div class="phase-badge">Phase 1</div>
+  <div class="section-tag">Open Card Sort</div>
+  <h2 class="section-title">Discovering Mental Models</h2>
+  <p class="section-desc">8 participants. No predefined categories. Each participant sorted 30 cards into groups they named themselves. The goal: understand how students naturally organize campus support — before we impose any structure.</p>
+
+  <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Emergent Categories from Participants</h3>
+  <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 20px;">Participants created between 4 and 9 categories each. After synthesis, five dominant groupings emerged across participants:</p>
+
+  <div class="results-grid">
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #0A6E8A;"></div>
+        <span class="category-name">Mental Health & Wellbeing</span>
+        <span class="category-count">8 cards avg</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Talk to a counselor</span>
+        <span class="category-chip">Crisis line</span>
+        <span class="category-chip">Check my mood history</span>
+        <span class="category-chip">Breathing / relaxation tools</span>
+        <span class="category-chip">Stress management</span>
+        <span class="category-chip">See a doctor</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #C8A84B;"></div>
+        <span class="category-name">School & Academics</span>
+        <span class="category-count">9 cards avg</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Track my grades</span>
+        <span class="category-chip">Schedule tutoring</span>
+        <span class="category-chip">Talk to my advisor</span>
+        <span class="category-chip">Set a deadline reminder</span>
+        <span class="category-chip">Writing center help</span>
+        <span class="category-chip">Library resources</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #2A7A4F;"></div>
+        <span class="category-name">Basic Needs & Survival</span>
+        <span class="category-count">5 cards avg</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Get emergency food</span>
+        <span class="category-chip">Find housing help</span>
+        <span class="category-chip">Apply for financial aid</span>
+        <span class="category-chip">Transportation help</span>
+        <span class="category-chip">Childcare resources</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #1F3864;"></div>
+        <span class="category-name">People & Connection</span>
+        <span class="category-count">6 cards avg</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Find a study group</span>
+        <span class="category-chip">Peer mentoring</span>
+        <span class="category-chip">Student clubs</span>
+        <span class="category-chip">Meet other students</span>
+        <span class="category-chip">Campus events</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout finding">
+    <div class="callout-label">Key Finding</div>
+    <p>Students organized resources by <strong>what they needed to feel better</strong>, not by which department provided it. "Get emergency food" went with mental health help more often than with financial services — because students associated it with crisis, not budgeting. This was the most important signal for Peak's IA.</p>
+  </div>
+
+  <div class="callout insight">
+    <div class="callout-label">Surprise Finding</div>
+    <p>"Check my mood history" was consistently sorted into Academics — not Mental Health. Students explained: "That's performance data. Like checking my grades." This challenged the assumption that check-in features belong under a wellness tab.</p>
+  </div>
+</div>
+
+<!-- SECTION: CLOSED CARD SORT -->
+<div class="section">
+  <div class="phase-badge gold">Phase 2</div>
+  <div class="section-tag">Closed Card Sort</div>
+  <h2 class="section-title">Validating the Proposed Structure</h2>
+  <p class="section-desc">8 participants (different from Phase 1). Predefined categories based on Peak's initial navigation proposal: Check-in, Courses, Resources, Community. Participants sorted 30 cards into these four tabs — and could flag cards that didn't fit anywhere.</p>
+
+  <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Peak's Proposed Navigation (Pre-Research)</h3>
+  <div class="nav-proposal">
+    <div class="nav-tab">
+      <div class="nav-tab-header">
+        <span class="nav-icon">📋</span>
+        <span class="nav-tab-name">Check-in</span>
+      </div>
+      <ul class="nav-items">
+        <li>Daily mood check-in</li>
+        <li>Mood history</li>
+        <li>Wellness reflections</li>
+        <li>Goal tracking</li>
+      </ul>
+    </div>
+    <div class="nav-tab">
+      <div class="nav-tab-header">
+        <span class="nav-icon">📚</span>
+        <span class="nav-tab-name">Courses</span>
+      </div>
+      <ul class="nav-items">
+        <li>Deadlines & reminders</li>
+        <li>Grade tracking</li>
+        <li>Advisor contact</li>
+        <li>Tutoring</li>
+      </ul>
+    </div>
+    <div class="nav-tab">
+      <div class="nav-tab-header">
+        <span class="nav-icon">🙋</span>
+        <span class="nav-tab-name">Resources</span>
+      </div>
+      <ul class="nav-items">
+        <li>Counseling services</li>
+        <li>Crisis line</li>
+        <li>Medical care</li>
+        <li>Financial aid</li>
+        <li>Basic needs</li>
+      </ul>
+    </div>
+    <div class="nav-tab">
+      <div class="nav-tab-header">
+        <span class="nav-icon">👥</span>
+        <span class="nav-tab-name">Community</span>
+      </div>
+      <ul class="nav-items">
+        <li>Study groups</li>
+        <li>Peer mentoring</li>
+        <li>Campus events</li>
+        <li>Student clubs</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Agreement Rates by Card</h3>
+  <p style="font-size: 14px; color: var(--gray-600); margin-bottom: 16px;">% of participants who placed each card in the same category as the design team's intention:</p>
+
+  <div class="matrix-wrap">
+    <table>
+      <tr>
+        <th>Card</th>
+        <th>Intended Tab</th>
+        <th>Agreement</th>
+        <th>Where it actually went</th>
+      </tr>
+      <tr><td>Daily mood check-in</td><td>Check-in</td><td class="agreement-high">88%</td><td>Strong consensus</td></tr>
+      <tr><td>Track my grades</td><td>Courses</td><td class="agreement-high">87%</td><td>Strong consensus</td></tr>
+      <tr><td>Find a study group</td><td>Community</td><td class="agreement-high">83%</td><td>Strong consensus</td></tr>
+      <tr><td>Talk to a counselor</td><td>Resources</td><td class="agreement-high">81%</td><td>Strong consensus</td></tr>
+      <tr><td>Set a deadline reminder</td><td>Courses</td><td class="agreement-mid">71%</td><td>Some placed in Check-in</td></tr>
+      <tr><td>Crisis line</td><td>Resources</td><td class="agreement-mid">67%</td><td>Some placed in Check-in</td></tr>
+      <tr><td>Mood history</td><td>Check-in</td><td class="agreement-mid">58%</td><td>Split: Check-in / Courses</td></tr>
+      <tr><td>Get emergency food</td><td>Resources</td><td class="agreement-mid">54%</td><td>Split: Resources / Check-in</td></tr>
+      <tr><td>Peer mentoring</td><td>Community</td><td class="agreement-low">42%</td><td>Split: Community / Resources</td></tr>
+      <tr><td>Breathing / relaxation</td><td>Check-in</td><td class="agreement-low">38%</td><td>Split: Check-in / Resources</td></tr>
+      <tr><td>Apply for financial aid</td><td>Resources</td><td class="agreement-low">33%</td><td>Split across all four tabs</td></tr>
+    </table>
+  </div>
+
+  <div class="callout finding">
+    <div class="callout-label">Key Finding</div>
+    <p>High agreement (80%+) for core items in each tab. But three categories of confusion emerged: <strong>(1)</strong> Crisis and mental health items split between Resources and Check-in — suggesting students see the check-in as a gateway to help, not just a tracking tool. <strong>(2)</strong> "Financial aid" didn't belong anywhere — it felt like a different kind of resource. <strong>(3)</strong> "Peer mentoring" was seen as a Resource by some, a Community feature by others.</p>
+  </div>
+</div>
+
+<!-- SECTION: HYBRID -->
+<div class="section">
+  <div class="phase-badge navy">Phase 3</div>
+  <div class="section-tag">Hybrid Card Sort</div>
+  <h2 class="section-title">Refining the Architecture</h2>
+  <p class="section-desc">8 new participants. Predefined categories (revised after Phase 2) plus the ability to create new categories for items that didn't fit. Focused specifically on the 11 cards with under 70% agreement in Phase 2.</p>
+
+  <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Revised Categories Tested</h3>
+  <div class="callout insight">
+    <div class="callout-label">Hypothesis Going In</div>
+    <p>Based on Phase 1 findings, we hypothesized that students think in terms of <em>urgency</em> as much as <em>topic</em>. "I need help right now" vs "I need to plan ahead." We tested a revised IA that surfaced urgent resources differently from ongoing support.</p>
+  </div>
+
+  <div class="results-grid" style="margin-top: 20px;">
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #B5372A;"></div>
+        <span class="category-name">Right Now (new)</span>
+        <span class="category-count">tested</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Crisis line</span>
+        <span class="category-chip">Get emergency food</span>
+        <span class="category-chip">Talk to a counselor</span>
+        <span class="category-chip">See a doctor</span>
+        <span class="category-chip">Find housing help</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #0A6E8A;"></div>
+        <span class="category-name">Support & Resources</span>
+        <span class="category-count">revised</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Financial aid</span>
+        <span class="category-chip">Peer mentoring</span>
+        <span class="category-chip">Disability services</span>
+        <span class="category-chip">Writing center</span>
+        <span class="category-chip">Career services</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #C8A84B;"></div>
+        <span class="category-name">My Academics</span>
+        <span class="category-count">stable</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Track my grades</span>
+        <span class="category-chip">Deadlines</span>
+        <span class="category-chip">Advisor contact</span>
+        <span class="category-chip">Mood history</span>
+        <span class="category-chip">Tutoring</span>
+      </div>
+    </div>
+
+    <div class="result-category">
+      <div class="category-header">
+        <div class="category-dot" style="background: #1F3864;"></div>
+        <span class="category-name">People & Campus</span>
+        <span class="category-count">stable</span>
+      </div>
+      <div class="category-cards">
+        <span class="category-chip">Find a study group</span>
+        <span class="category-chip">Campus events</span>
+        <span class="category-chip">Student clubs</span>
+        <span class="category-chip">Meet other students</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout recommendation">
+    <div class="callout-label">Hybrid Finding</div>
+    <p>"Mood history" moved to Academics in 6 of 8 hybrid sessions — confirming the Phase 1 surprise. Students see self-tracking as performance data, not wellness care. The check-in feature stays in the Check-in tab, but the <em>history</em> of check-ins belongs alongside grades and deadlines.</p>
+  </div>
+</div>
+
+<!-- SECTION: SYNTHESIS -->
+<div class="section">
+  <div class="section-tag">Synthesis & Decisions</div>
+  <h2 class="section-title">What the Research Changed</h2>
+  <p class="section-desc">Three rounds of card sorting produced specific, actionable IA decisions. Here's what changed from the original design — and why.</p>
+
+  <div class="two-col" style="margin-bottom: 32px;">
+    <div>
+      <h3 style="font-size: 15px; color: var(--gray-600); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-size: 11px;">Before Research</h3>
+      <div style="background: var(--white); border-radius: 12px; padding: 20px; border: 1px solid var(--gray-200);">
+        <div style="font-size: 13px; color: var(--gray-600); display: flex; flex-direction: column; gap: 8px;">
+          <div>📋 Check-in — mood tracking, wellness tools, crisis line</div>
+          <div>📚 Courses — grades, deadlines, tutoring, advisor</div>
+          <div>🙋 Resources — counseling, medical, financial aid, basic needs</div>
+          <div>👥 Community — study groups, peer mentoring, events</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size: 15px; color: var(--teal); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-size: 11px;">After Research</h3>
+      <div style="background: var(--teal-light); border-radius: 12px; padding: 20px; border: 1px solid var(--teal-mid);">
+        <div style="font-size: 13px; color: var(--gray-800); display: flex; flex-direction: column; gap: 8px;">
+          <div>📋 Check-in — daily mood check-in, breathing tools, reflections</div>
+          <div>📚 Courses — grades, deadlines, mood history, tutoring, advisor</div>
+          <div>🙋 Resources — counseling, medical, financial aid, crisis line, basic needs</div>
+          <div>👥 Community — study groups, events, clubs, peer mentoring</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 16px; color: var(--navy); margin-bottom: 16px;">Three Specific Changes Made</h3>
+
+  <div class="callout recommendation">
+    <div class="callout-label">Change 1</div>
+    <p><strong>Mood history moved from Check-in to Courses.</strong> Students treat self-tracking as academic performance data. Surfacing it alongside grades reduces friction and increases the feature's perceived utility.</p>
+  </div>
+
+  <div class="callout recommendation">
+    <div class="callout-label">Change 2</div>
+    <p><strong>Crisis line moved from Check-in to Resources.</strong> While the check-in can surface crisis resources contextually, the crisis line as a standalone feature belongs where students go when they need help — not where they go to track how they feel.</p>
+  </div>
+
+  <div class="callout recommendation">
+    <div class="callout-label">Change 3</div>
+    <p><strong>Peer mentoring moved from Community to Resources.</strong> Students see mentoring as a support service they access, not a community they join. The language matters: "Get a peer mentor" belongs with other services; "Find study partners" belongs in Community.</p>
+  </div>
+</div>
+
+<!-- SECTION: STUDENT ASSIGNMENT -->
+<div class="section">
+  <div class="section-tag">Teaching Artifact</div>
+  <h2 class="section-title">Student Assignment Version</h2>
+  <p class="section-desc">This card sort was designed as a replicable teaching exercise. Students conduct their own version of this study, analyze results, and propose an IA for a fictional product of their choice.</p>
+
+  <div class="assignment">
+    <h3>Card Sorting Assignment: Information Architecture for [Your Product]</h3>
+    <p class="subtitle">ENGL 46700/56701 — Writing for Multiple Media | Interaction Design Unit</p>
+
+    <div class="assignment-steps">
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <h4>Define Your Cards</h4>
+        <p>Identify 20–30 content items or features your product needs to surface. Write each in plain language — how a user would describe it, not how a department would label it.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <h4>Run an Open Sort</h4>
+        <p>Ask 5–8 participants to group your cards however makes sense to them and name each group. Use index cards physically or OptimalSort digitally. Document every category name.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <h4>Synthesize & Propose</h4>
+        <p>Find patterns across participants. Which items clustered consistently? Which caused confusion? Propose an IA based on the dominant mental models you observed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 04</div>
+        <h4>Validate with Closed Sort</h4>
+        <p>Run a closed sort with your proposed structure. Measure agreement rates. Identify any items with under 70% agreement — those need redesign or reclassification.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 05</div>
+        <h4>Document Your Rationale</h4>
+        <p>Write a 500-word synthesis explaining what you found, what you changed, and why. Cite specific participant behaviors or quotes where possible.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 06</div>
+        <h4>Present Your IA</h4>
+        <p>Present your final navigation structure with agreement data. Be prepared to defend decisions where agreement was mixed — ambiguity is a research finding, not a failure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout insight">
+    <div class="callout-label">Instructor Note</div>
+    <p>The most valuable learning moment in this exercise is when participants disagree — when 40% put a card in Category A and 60% put it in Category B. That ambiguity is data. It means the content item needs either clearer labeling, a different structural home, or contextual placement in multiple locations. Students who learn to sit with ambiguity rather than forcing a clean answer are learning to think like information architects.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <strong style="color: rgba(255,255,255,0.7);">Peak App — Card Sorting Research Portfolio</strong><br>
+  Beth Keller Kirycki | UX Researcher & Content Strategist<br>
+  <a href="mailto:ekellerkirycki@gmail.com">ekellerkirycki@gmail.com</a> | <a href="https://linkedin.com/in/elizabethjkeller">linkedin.com/in/elizabethjkeller</a><br><br>
+  <em>Peak is a fictional product created as a portfolio and pedagogical case study. All participant data is illustrative.</em>
+</div>
+
+</body>
+</html>
