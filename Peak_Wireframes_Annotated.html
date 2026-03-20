@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak App — Lo-Fi Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1A1A1A;
+    --ink-light: #555;
+    --ink-faint: #999;
+    --border: #CCCCCC;
+    --border-light: #E5E5E5;
+    --fill-light: #F5F5F5;
+    --fill-mid: #E0E0E0;
+    --fill-dark: #BBBBBB;
+    --white: #FFFFFF;
+    --annotation: #0A6E8A;
+    --annotation-bg: #F0F8FA;
+    --font-ui: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  body {
+    background: #EFEFEF;
+    font-family: var(--font-ui);
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    text-align: center;
+    max-width: 700px;
+  }
+
+  .page-header .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .page-header .byline {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* SCREEN SECTION */
+  .screen-section {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .screen-section.reverse { flex-direction: row-reverse; }
+
+  /* WIREFRAME PHONE */
+  .wireframe-phone {
+    flex-shrink: 0;
+    width: 320px;
+  }
+
+  .phone-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .phone-frame {
+    width: 320px;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* STATUS BAR */
+  .wf-status {
+    height: 36px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: var(--fill-light);
+  }
+
+  .wf-status-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+
+  /* NOTCH */
+  .wf-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: var(--ink);
+    border-radius: 0 0 12px 12px;
+    z-index: 10;
+  }
+
+  /* GENERIC WF ELEMENTS */
+  .wf-section {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .wf-section:last-child { border-bottom: none; }
+
+  .wf-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .wf-headline {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .wf-subhead {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  .wf-body {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  /* PROGRESS BAR */
+  .wf-progress {
+    height: 3px;
+    background: var(--border-light);
+    border-radius: 2px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wf-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--fill-dark);
+    border-radius: 2px;
+  }
+
+  /* BUTTONS */
+  .wf-btn-primary {
+    width: 100%;
+    padding: 13px;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+    cursor: default;
+  }
+
+  .wf-btn-secondary {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: var(--ink-faint);
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    text-align: center;
+    cursor: default;
+  }
+
+  .wf-btn-outline {
+    width: 100%;
+    padding: 13px;
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 8px;
+    cursor: default;
+  }
+
+  /* CHECKBOXES / OPTIONS */
+  .wf-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    background: var(--white);
+  }
+
+  .wf-option.selected {
+    border-color: var(--ink);
+    background: var(--fill-light);
+  }
+
+  .wf-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wf-option.selected .wf-checkbox {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .wf-checkmark {
+    font-size: 10px;
+    color: white;
+    font-weight: 700;
+  }
+
+  .wf-option-text {
+    font-size: 12px;
+    color: var(--ink);
+  }
+
+  /* CARD */
+  .wf-card {
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .wf-card-inner { padding: 14px 16px; }
+
+  /* MOOD ROW */
+  .wf-mood-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .wf-mood-chip {
+    flex: 1;
+    padding: 8px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .wf-mood-chip.selected {
+    border-color: var(--ink);
+    background: var(--fill-light);
+  }
+
+  .wf-mood-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--fill-mid);
+    border-radius: 50%;
+  }
+
+  .wf-mood-label {
+    font-size: 9px;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  .wf-mood-chip.selected .wf-mood-label { color: var(--ink); }
+
+  /* LIST ITEMS */
+  .wf-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .wf-list-item:last-child { border-bottom: none; }
+
+  .wf-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--fill-dark);
+    flex-shrink: 0;
+  }
+
+  .wf-list-text {
+    flex: 1;
+    font-size: 11px;
+    color: var(--ink);
+  }
+
+  .wf-list-meta {
+    font-size: 10px;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+  }
+
+  .wf-list-meta.urgent {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* RESOURCE ROW */
+  .wf-resource-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .wf-resource-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--fill-mid);
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .wf-resource-text { flex: 1; }
+
+  .wf-resource-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .wf-resource-sub {
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+
+  .wf-chevron {
+    font-size: 16px;
+    color: var(--border);
+  }
+
+  /* HEADER BAR (dark) */
+  .wf-header-dark {
+    background: var(--fill-dark);
+    padding: 16px 20px 20px;
+  }
+
+  .wf-header-greeting {
+    font-size: 10px;
+    color: var(--ink-light);
+    margin-bottom: 2px;
+    font-family: var(--font-mono);
+  }
+
+  .wf-header-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .wf-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 10px;
+    color: var(--ink-light);
+  }
+
+  .wf-pill-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--ink-light);
+    border-radius: 50%;
+  }
+
+  /* TAB BAR */
+  .wf-tab-bar {
+    display: flex;
+    border-top: 1px solid var(--border);
+    padding: 10px 0 18px;
+    background: var(--white);
+  }
+
+  .wf-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .wf-tab-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--fill-mid);
+    border-radius: 5px;
+  }
+
+  .wf-tab-label {
+    font-size: 9px;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+  }
+
+  .wf-tab.active .wf-tab-icon { background: var(--fill-dark); }
+  .wf-tab.active .wf-tab-label { color: var(--ink); }
+
+  /* WELCOME HERO (wireframe) */
+  .wf-hero {
+    background: var(--fill-mid);
+    padding: 40px 20px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .wf-logo-placeholder {
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wf-logo-mark {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 1px;
+  }
+
+  .wf-hero-headline {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+
+  .wf-hero-sub {
+    font-size: 12px;
+    color: var(--ink-light);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 230px;
+  }
+
+  /* CTA INLINE */
+  .wf-cta-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--fill-light);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 6px;
+    cursor: default;
+  }
+
+  /* ANNOTATION PANEL */
+  .annotation-panel {
+    flex: 1;
+  }
+
+  .annotation-panel h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+
+  .annotation-panel .screen-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .annotation-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    align-items: flex-start;
+  }
+
+  .ann-number {
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ann-content { flex: 1; }
+
+  .ann-element {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--annotation);
+    margin-bottom: 4px;
+  }
+
+  .ann-copy {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  .ann-rationale {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  /* DESIGN DECISIONS BOX */
+  .decisions-box {
+    background: var(--annotation-bg);
+    border: 1px solid #C0DDE5;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 20px;
+  }
+
+  .decisions-box h4 {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--annotation);
+    margin-bottom: 8px;
+  }
+
+  .decisions-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .decisions-box li {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .decisions-box li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--annotation);
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    width: 100%;
+    max-width: 1000px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* FOOTER */
+  .page-footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+    padding-bottom: 40px;
+    line-height: 1.8;
+  }
+
+  /* REDLINE CALLOUT NUMBERS ON PHONE */
+  .callout-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--annotation);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    font-family: var(--font-mono);
+    z-index: 20;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="tag">Lo-Fi Wireframes — Portfolio Artifact</div>
+  <h1>Peak App — Annotated Wireframes</h1>
+  <p>Three core screens with UX copy in context and design rationale.</p>
+  <p>Created as a pedagogical case study for Interaction Design coursework.</p>
+  <p class="byline">Beth Keller Kirycki | ekellerkirycki@gmail.com | linkedin.com/in/elizabethjkeller</p>
+</div>
+
+<!-- ======================== -->
+<!-- SCREEN 1: WELCOME        -->
+<!-- ======================== -->
+<div class="screen-section">
+
+  <div class="wireframe-phone">
+    <div class="phone-label">Screen 1 — Welcome / Onboarding Entry</div>
+    <div class="phone-frame" style="position: relative;">
+      <div class="wf-notch"></div>
+      <div class="wf-status">
+        <span class="wf-status-text">9:41</span>
+        <span class="wf-status-text">▐▐▐ ))) ▓▓</span>
+      </div>
+
+      <!-- Hero area -->
+      <div class="wf-hero">
+        <div class="wf-logo-placeholder">
+          <span class="wf-logo-mark">PEAK</span>
+        </div>
+        <h2 class="wf-hero-headline">You don't have to figure it out alone.</h2>
+        <p class="wf-hero-sub">Peak helps you stay on track, check in with yourself, and find support when you need it.</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="wf-section">
+        <div class="wf-btn-primary">Get started</div>
+        <div class="wf-btn-secondary">Already have an account? Sign in</div>
+      </div>
+
+      <!-- Callout markers -->
+      <div class="callout-marker" style="top: 120px; right: 14px;">1</div>
+      <div class="callout-marker" style="top: 178px; right: 14px;">2</div>
+      <div class="callout-marker" style="top: 330px; right: 14px;">3</div>
+    </div>
+  </div>
+
+  <div class="annotation-panel">
+    <h3>Welcome Screen</h3>
+    <p class="screen-desc">First impression and conversion moment. Goal: communicate value, signal tone, reduce anxiety about starting something new. Every word earns its place.</p>
+
+    <div class="annotation-item">
+      <div class="ann-number">1</div>
+      <div class="ann-content">
+        <div class="ann-element">Headline</div>
+        <div class="ann-copy">"You don't have to figure it out alone."</div>
+        <div class="ann-rationale">Addresses the primary emotional barrier to adoption: the feeling that needing help is a personal failure. 'Alone' reframes the app as companionship, not surveillance or data collection. Avoids product feature claims ("the #1 student wellness app") in favor of emotional truth.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">2</div>
+      <div class="ann-content">
+        <div class="ann-element">Subhead</div>
+        <div class="ann-copy">"Peak helps you stay on track, check in with yourself, and find support when you need it."</div>
+        <div class="ann-rationale">Three parallel verbs (stay, check in, find) communicate product scope without an overwhelming feature list. Serial structure creates rhythm and scanability. No exclamation points — wellness context requires calm, not excitement.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">3</div>
+      <div class="ann-content">
+        <div class="ann-element">CTAs</div>
+        <div class="ann-copy">"Get started" / "Already have an account? Sign in"</div>
+        <div class="ann-rationale">Primary CTA is direct without manufactured urgency. Secondary is a complete sentence (not just "Sign in") because it answers the user's question before they have to ask. No visual hierarchy that guilts the user into the primary path.</div>
+      </div>
+    </div>
+
+    <div class="decisions-box">
+      <h4>Key Design Decisions</h4>
+      <ul>
+        <li>No exclamation points anywhere on this screen</li>
+        <li>Headline targets emotional state, not product features</li>
+        <li>Secondary CTA is equally accessible — no small gray text</li>
+        <li>Logo mark present but not dominant — product earns attention, not the brand</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ======================== -->
+<!-- SCREEN 2: GOALS          -->
+<!-- ======================== -->
+<div class="screen-section reverse">
+
+  <div class="wireframe-phone">
+    <div class="phone-label">Screen 2 — Onboarding Goals Selection</div>
+    <div class="phone-frame" style="position: relative;">
+      <div class="wf-notch"></div>
+      <div class="wf-status">
+        <span class="wf-status-text">9:41</span>
+        <span class="wf-status-text">▐▐▐ ))) ▓▓</span>
+      </div>
+
+      <div class="wf-section">
+        <div class="wf-progress">
+          <div class="wf-progress-fill" style="width: 50%;"></div>
+        </div>
+        <div class="wf-headline">What's on your plate right now?</div>
+        <div class="wf-subhead">Pick everything that applies. You can always change this later.</div>
+      </div>
+
+      <div class="wf-section" style="padding-top: 8px;">
+        <div class="wf-option selected">
+          <div class="wf-checkbox"><span class="wf-checkmark">✓</span></div>
+          <span class="wf-option-text">Keeping up with coursework</span>
+        </div>
+        <div class="wf-option selected">
+          <div class="wf-checkbox"><span class="wf-checkmark">✓</span></div>
+          <span class="wf-option-text">Managing stress or anxiety</span>
+        </div>
+        <div class="wf-option">
+          <div class="wf-checkbox"></div>
+          <span class="wf-option-text">Staying motivated</span>
+        </div>
+        <div class="wf-option">
+          <div class="wf-checkbox"></div>
+          <span class="wf-option-text">Finding campus resources</span>
+        </div>
+        <div class="wf-option selected">
+          <div class="wf-checkbox"><span class="wf-checkmark">✓</span></div>
+          <span class="wf-option-text">Connecting with others</span>
+        </div>
+        <div class="wf-option">
+          <div class="wf-checkbox"></div>
+          <span class="wf-option-text">Something else</span>
+        </div>
+      </div>
+
+      <div class="wf-section">
+        <div class="wf-btn-primary">This looks right</div>
+        <div class="wf-btn-secondary">Skip for now</div>
+      </div>
+
+      <!-- Callout markers -->
+      <div class="callout-marker" style="top: 44px; left: 14px;">1</div>
+      <div class="callout-marker" style="top: 78px; right: 14px;">2</div>
+      <div class="callout-marker" style="top: 96px; right: 14px;">3</div>
+      <div class="callout-marker" style="bottom: 74px; right: 14px;">4</div>
+    </div>
+  </div>
+
+  <div class="annotation-panel">
+    <h3>Goals Selection Screen</h3>
+    <p class="screen-desc">High-friction onboarding moment. Users are being asked to categorize their struggles before they trust the app. Every content decision reduces commitment anxiety and increases completion.</p>
+
+    <div class="annotation-item">
+      <div class="ann-number">1</div>
+      <div class="ann-content">
+        <div class="ann-element">Progress Indicator</div>
+        <div class="ann-copy">Unlabeled progress bar (no step count)</div>
+        <div class="ann-rationale">Research consistently shows that numbered steps ("Step 3 of 7") increase onboarding abandonment. Users calculate remaining effort and disengage. An unlabeled bar communicates progress without creating a countdown. The bar is thin and unobtrusive — it doesn't compete with the task.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">2</div>
+      <div class="ann-content">
+        <div class="ann-element">Headline</div>
+        <div class="ann-copy">"What's on your plate right now?"</div>
+        <div class="ann-rationale">Familiar idiom normalizes the presence of multiple struggles. Contrast with "Tell us about yourself" (surveillance framing) or "Select your goals" (clinical/formal). "Right now" anchors to the present moment — this isn't about life goals, it's about today.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">3</div>
+      <div class="ann-content">
+        <div class="ann-element">Subhead</div>
+        <div class="ann-copy">"You can always change this later."</div>
+        <div class="ann-rationale">Critical phrase. Reduces perceived permanence of the choice. Users who fear "locking in" an answer are more likely to abandon or answer dishonestly. This single sentence increases both completion rates and response quality.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">4</div>
+      <div class="ann-content">
+        <div class="ann-element">Primary CTA</div>
+        <div class="ann-copy">"This looks right" / "Skip for now"</div>
+        <div class="ann-rationale">"This looks right" asks for light confirmation, not commitment. "Next" implies forward momentum without reflection; "This looks right" invites the user to review their selections before proceeding. "Skip for now" is genuinely offered — same size, same position, not buried. Respecting the skip reduces resentment and increases long-term engagement.</div>
+      </div>
+    </div>
+
+    <div class="decisions-box">
+      <h4>Key Design Decisions</h4>
+      <ul>
+        <li>Multi-select with no minimum — users can select zero items if needed</li>
+        <li>Options are neutral, not clinical ("stress or anxiety" not "mental health struggles")</li>
+        <li>"Something else" always included — users who don't see themselves disengage</li>
+        <li>Selected state uses visual weight, not color alone (WCAG accessibility)</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ======================== -->
+<!-- SCREEN 3: DASHBOARD      -->
+<!-- ======================== -->
+<div class="screen-section">
+
+  <div class="wireframe-phone">
+    <div class="phone-label">Screen 3 — Home Dashboard</div>
+    <div class="phone-frame" style="position: relative;">
+      <div class="wf-notch"></div>
+      <div class="wf-status" style="background: var(--fill-dark);">
+        <span class="wf-status-text">9:41</span>
+        <span class="wf-status-text">▐▐▐ ))) ▓▓</span>
+      </div>
+
+      <!-- Header -->
+      <div class="wf-header-dark">
+        <div class="wf-header-greeting">Good morning</div>
+        <div class="wf-header-name">Hey, Jordan.</div>
+        <div class="wf-pill">
+          <div class="wf-pill-dot"></div>
+          3-day check-in streak
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="padding: 12px 14px; background: var(--fill-light); flex: 1; display: flex; flex-direction: column; gap: 10px;">
+
+        <!-- Check-in card -->
+        <div class="wf-card">
+          <div class="wf-card-inner">
+            <div class="wf-label">Daily Check-in</div>
+            <div class="wf-headline" style="font-size: 15px; margin-bottom: 4px;">How are you feeling today?</div>
+            <div class="wf-body">No right answer here. Takes about 2 minutes.</div>
+            <div class="wf-mood-row">
+              <div class="wf-mood-chip">
+                <div class="wf-mood-icon"></div>
+                <div class="wf-mood-label">Calm</div>
+              </div>
+              <div class="wf-mood-chip selected">
+                <div class="wf-mood-icon"></div>
+                <div class="wf-mood-label">Stressed</div>
+              </div>
+              <div class="wf-mood-chip">
+                <div class="wf-mood-icon"></div>
+                <div class="wf-mood-label">Numb</div>
+              </div>
+              <div class="wf-mood-chip">
+                <div class="wf-mood-icon"></div>
+                <div class="wf-mood-label">Good</div>
+              </div>
+            </div>
+            <div class="wf-cta-inline">Start check-in →</div>
+          </div>
+        </div>
+
+        <!-- Coming up -->
+        <div class="wf-card">
+          <div class="wf-card-inner" style="padding-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <div class="wf-label" style="margin: 0;">Coming up</div>
+              <div class="wf-label" style="margin: 0;">3 items</div>
+            </div>
+            <div class="wf-list-item">
+              <div class="wf-dot"></div>
+              <div class="wf-list-text">ENGL 302 — Response paper</div>
+              <div class="wf-list-meta urgent">2 days</div>
+            </div>
+            <div class="wf-list-item">
+              <div class="wf-dot"></div>
+              <div class="wf-list-text">PSYCH 210 — Midterm</div>
+              <div class="wf-list-meta">5 days</div>
+            </div>
+            <div class="wf-list-item">
+              <div class="wf-dot"></div>
+              <div class="wf-list-text">SOC 101 — Reading quiz</div>
+              <div class="wf-list-meta">Next week</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resource -->
+        <div class="wf-card">
+          <div class="wf-resource-row">
+            <div class="wf-resource-icon"></div>
+            <div class="wf-resource-text">
+              <div class="wf-resource-title">Campus Counseling Center</div>
+              <div class="wf-resource-sub">Now offering evening hours</div>
+            </div>
+            <div class="wf-chevron">›</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab bar -->
+      <div class="wf-tab-bar">
+        <div class="wf-tab active">
+          <div class="wf-tab-icon"></div>
+          <div class="wf-tab-label">Home</div>
+        </div>
+        <div class="wf-tab">
+          <div class="wf-tab-icon"></div>
+          <div class="wf-tab-label">Check-in</div>
+        </div>
+        <div class="wf-tab">
+          <div class="wf-tab-icon"></div>
+          <div class="wf-tab-label">Courses</div>
+        </div>
+        <div class="wf-tab">
+          <div class="wf-tab-icon"></div>
+          <div class="wf-tab-label">Resources</div>
+        </div>
+      </div>
+
+      <!-- Callout markers -->
+      <div class="callout-marker" style="top: 64px; right: 14px;">1</div>
+      <div class="callout-marker" style="top: 148px; right: 14px;">2</div>
+      <div class="callout-marker" style="top: 270px; right: 14px;">3</div>
+      <div class="callout-marker" style="top: 338px; right: 14px;">4</div>
+    </div>
+  </div>
+
+  <div class="annotation-panel">
+    <h3>Home Dashboard</h3>
+    <p class="screen-desc">Highest-exposure screen in the app. A user who checks in daily sees this hundreds of times a semester. Every content decision compounds. Nothing can feel rote, pushy, or clinical.</p>
+
+    <div class="annotation-item">
+      <div class="ann-number">1</div>
+      <div class="ann-content">
+        <div class="ann-element">Greeting</div>
+        <div class="ann-copy">"Good morning / Hey, Jordan."</div>
+        <div class="ann-rationale">Two-line greeting: time-sensitive context line ("Good morning") followed by personal name with casual register ("Hey"). "Hey" signals friendship register, not institutional register. Uses the name the user gave in onboarding — whatever they said, including nicknames. "Jordan Smith" would be institutional; "Jordan" is human.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">2</div>
+      <div class="ann-content">
+        <div class="ann-element">Check-in Card</div>
+        <div class="ann-copy">"How are you feeling today? No right answer here. Takes about 2 minutes."</div>
+        <div class="ann-rationale">"No right answer here" defuses performance anxiety — students in wellness apps often report checking in based on what they think they should feel, not what they do. "Takes about 2 minutes" sets expectations and reduces the commitment barrier. Time estimates in CTAs consistently improve conversion on high-effort actions.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">3</div>
+      <div class="ann-content">
+        <div class="ann-element">Deadline Display</div>
+        <div class="ann-copy">"2 days" (urgent) vs "Next week" (low urgency)</div>
+        <div class="ann-rationale">Urgency is signaled through visual weight (bold, darker color for urgent items) — not through alarm language. No "DUE SOON!" or "Don't forget!" The fact alone is sufficient. Users who are already stressed do not need the app to amplify their anxiety through exclamatory copy.</div>
+      </div>
+    </div>
+
+    <div class="annotation-item">
+      <div class="ann-number">4</div>
+      <div class="ann-content">
+        <div class="ann-element">Resource Card</div>
+        <div class="ann-copy">"Campus Counseling Center — Now offering evening hours"</div>
+        <div class="ann-rationale">Resource notifications lead with the most useful fact (evening hours) rather than "New resource available." The subtitle answers "why does this matter to me right now?" before the user has to ask. No "Might be useful!" — the exclamation point would trivialize access to mental health services.</div>
+      </div>
+    </div>
+
+    <div class="decisions-box">
+      <h4>Key Design Decisions</h4>
+      <ul>
+        <li>Streak displayed as a neutral fact ("3-day streak"), not a gamification threat</li>
+        <li>Four navigation tabs cover the full product surface without overwhelming</li>
+        <li>Check-in card is first — the product's primary value proposition leads</li>
+        <li>Resource card uses no assumption of need ("Might be useful" vs "You need this")</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  PEAK APP — LO-FI WIREFRAMES WITH UX COPY ANNOTATIONS<br>
+  Beth Keller Kirycki | ekellerkirycki@gmail.com | linkedin.com/in/elizabethjkeller<br>
+  Created as a pedagogical case study for Interaction Design coursework.<br>
+  All copy is original work. Peak is a fictional product.
+</div>
+
+</body>
+</html>
